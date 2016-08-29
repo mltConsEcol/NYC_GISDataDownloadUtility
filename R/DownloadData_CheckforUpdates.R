@@ -36,7 +36,7 @@ download_extract_zip <- function(url, datasetname, folder) {
 #Non-parallel version (Updates the updated and downloaded dates) - takes ~20 seconds
 system.time(for (i in 1:nrow(datalist)) {
 
-  if (datalist$Data_Source[i] == 'NYCOpenData' & datalist$Format[i] == 'Shapefile')  {
+  if ((datalist$Data_Source[i] == 'NYCOpenData' & datalist$Format[i] == 'Shapefile')|(datalist$Data_Source[i] == 'NYCOpenData' & datalist$Format[i] == 'ESRI FileGDB')) {
     #Check if the directory with appropriate data exists locally
     if (dir.exists(datalist$Folder[i]))
     {
