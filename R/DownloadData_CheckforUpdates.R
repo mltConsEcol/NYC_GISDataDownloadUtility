@@ -3,13 +3,14 @@
 #unzip test.zip
 
 
-#setwd("Raw_Data/NYC_TNC_NYCprogram")
-setwd("~/../../../media/sf_N_DRIVE/Raw_Data/NYC_TNC_NYCprogram/Version2_testing/")
+#setwd("Raw_Data/NYC_TNC_NYCprogram");
+setwd("~/../../media/sf_N_DRIVE/Raw_Data/NYC_TNC_NYCprogram/Version2_testing/")
+
 
 
 ##setwd("N:/Raw_Data/NYC_TNC_NYCprogram/Version2_testing/") #For Windows
 
-#Import list of data
+#Import list of data; Copy of the table with datasets is in inst/extdata
 datalist <- read.csv("DataList.csv", stringsAsFactors=FALSE)
 
 
@@ -30,10 +31,7 @@ download_extract_zip <- function(url, datasetname, folder) {
 ##### dataset and update the date in spreadsheet; if data non-existent (i.e., if
 ##### data not downloaded already), download
 
-## Need to update this to an apply function for speed
-## still need to add capability to import data into PostGIS if desired
-
-#Non-parallel version (Updates the updated and downloaded dates) - takes ~20 seconds
+#Might try to parallelize this, though it is difficult to update the datalist table in the same steps with foreach/doParallel
 system.time(for (i in 1:nrow(datalist)) {
 
   if ((datalist$Data_Source[i] == 'NYCOpenData' & datalist$Format[i] == 'Shapefile')|(datalist$Data_Source[i] == 'NYCOpenData' & datalist$Format[i] == 'ESRI FileGDB')) {
@@ -87,11 +85,10 @@ system.time(for (i in 1:nrow(datalist)) {
     }
   } else {
     print(paste(datalist$Dataset_Name[i], "was not checked"))}
-
 })
 
 #If desired, write out new version of data list with updated dates
-write.csv(datalist, file = "DataList.csv", row.names = FALSE)
+#write.csv(datalist, file = "DataList.csv", row.names = FALSE)
 
 
 
@@ -128,7 +125,7 @@ write.csv(datalist, file = "DataList.csv", row.names = FALSE)
 
 
 
-
+###Testing code-snippits
 #Read lines from webpage
 system.time(req <- readLines("https://data.cityofnewyork.us/City-Government/Parks-Properties/rjaj-zgq7"))
 
