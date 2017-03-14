@@ -9,4 +9,15 @@ datalist <- read.csv("DataList.csv", stringsAsFactors=FALSE)
 
 datalist
 
-system.time(CheckForUpdates(datalist))
+system.time(test1 <- CheckForUpdates(datalist))
+test1
+
+system.time((CheckForUpdates(datalist)))
+
+
+
+datalist <- read.csv("DataList.csv", stringsAsFactors=FALSE)
+if(!dir.exists("../download_Test")) dir.create("../datadownload_Test")
+
+setwd("../datadownload_Test/")
+system.time(initialDataDownload(datalist = datalist))
